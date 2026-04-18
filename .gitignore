@@ -11,3 +11,7 @@ build/
 coverage/
 packages/vscode-extension/bundled/
 packages/vscode-extension/out/
+
+# Internal plans + local Cursor files (not in git; use aura-plans + optional .cursor copy)
+planning/
+.cursor/

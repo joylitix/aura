@@ -1,0 +1,15 @@
+---
+description: semantic-release on main (stable) and rc/* (prerelease); Conventional Commits; rc train before main.
+alwaysApply: true
+---
+
+# Releases (semantic-release)
+
+- `.github/workflows/release.yml` runs **semantic-release** on **`rc/*`** and **workflow_dispatch**. **`main`** is intentionally **not** in the push trigger until the team wants stable semver from default-branch merges (see workflow comment).
+- When **`main`** is re-enabled in the workflow: **stable** releases `x.y.z`.
+- **`rc/*`**: **prereleases** `x.y.z-rc.n` (GitHub “Pre-release”) while integrating before merging into `main`.
+- **Semver** is derived from **Conventional Commits** since the last git tag: `feat` → minor, `fix` / `perf` → patch, `BREAKING CHANGE` or `feat!` → major (see [Angular preset](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-angular)).
+- **`ci`**, **`chore`**, **`docs`**, **`refactor`**, **`test`** commits usually **do not** produce a new version unless configured otherwise—use **`fix:`** or **`feat:`** when a release is intended.
+- **CHANGELOG.md** and **package.json** version are committed by the release job with **`[skip ci]`** to avoid loops.
+- **PR titles** into **`main`** / **`rc/*`**: enforced by `semantic-pr-title.yml`. For **`feat/*` → `rc/*`**, **squash** + conventional title is typical. For **`rc/*` → `main`**, prefer a **merge commit** (not squash) so **semantic-release** sees each `feat`/`fix` on `main`.
+- When a feature should **ship in the changelog**, use **`feat:`** / **`fix:`** (or merge commit subjects on `main` that stay conventional).

@@ -8,9 +8,10 @@ To clone or push after the org move, update your local remote if needed: `git re
 
 ### MVP track (GitHub)
 
+- **AI assistants:** open **`aura.code-workspace`** (loads **aura** + **aura-plans**). Read **`../aura-plans/README.md`** → **`../aura-plans/AI_CONTEXT.md`** → `POC_PLAN.md` / `MVP_PLAN.md` in that folder → optional local **`aura/.cursor/plans/`** (gitignored) → this file.
 - **Milestone:** [MVP](https://github.com/joylitix/aura/milestone/1) — chunked issues with label **`mvp`**.
-- **Checklist / order:** [planning/MVP_PLAN.md](planning/MVP_PLAN.md) (internal; links every ticket). Work issues **one at a time** in the suggested order unless a PR explicitly depends on another.
-- **Phases:** A phase is complete only when **all issues in that phase** are **closed** on GitHub (use `Fixes #N` / `Closes #N` in PR bodies when merging to default branch). See **“Phases and closing issues”** in `planning/MVP_PLAN.md`.
+- **Checklist / order:** **`aura-plans/MVP_PLAN.md`** (not in git; links every ticket). Work issues **one at a time** in the suggested order unless a PR explicitly depends on another.
+- **Phases:** A phase is complete only when **all issues in that phase** are **closed** on GitHub (use `Fixes #N` / `Closes #N` in PR bodies when merging to default branch). See **“Phases and closing issues”** in **`aura-plans/MVP_PLAN.md`**.
 
 ## GitHub workflow
 
@@ -90,11 +91,11 @@ In **Settings → Rules → Rulesets** (or classic branch protection):
   - `npm test` — runs `vitest` in **`packages/agent-core`**, etc.
   - `npm run docs:dev` — local preview at `http://localhost:3000` (with this repo’s GitHub Pages **`baseUrl`**, open **`/aura/`** on the dev server if configured).
   - `npm run docs:build` — production build into `apps/docs/build/`.
-- **Internal engineering plans** (full POC specs, sprint breakdowns, etc.) are **not** part of the published Docusaurus site. Keep them under repo paths such as **`planning/`** (for example **`planning/POC_PLAN.md`** for the detailed POC plan). The docs site may include **high-level roadmaps** only—see **`apps/docs/docs/development/roadmap.md`**.
+- **Internal engineering plans** (full POC specs, sprint breakdowns, etc.) are **not** part of the published Docusaurus site. Keep them in the **aura-plans** workspace folder (see **`aura.code-workspace`**)—for example **`aura-plans/POC_PLAN.md`**. The docs site may include **high-level roadmaps** only—see **`apps/docs/docs/development/roadmap.md`**.
 
 ## Commits
 
-Prefer **small, logical commits**; see `.cursor/rules/incremental-commits.mdc`.
+Prefer **small, logical commits**; see **`contributing/rules/incremental-commits.mdc`**.
 
 ### Releases (automated)
 
@@ -114,4 +115,4 @@ Prefer **small, logical commits**; see `.cursor/rules/incremental-commits.mdc`.
 | `release.yml` | Push to **`rc/*`** (or manual run) → semantic-release (**`-rc.n`**). **`main`** is currently excluded until stable releases are turned on. |
 | `docs-pages.yml` | Push to **`main`** with changes under **`apps/docs/`**, lockfile, or this workflow → Docusaurus build → **GitHub Pages** (or run **Docs (GitHub Pages)** manually via **Actions → workflow_dispatch**) |
 
-`.cursor/rules/github-releases.mdc` summarizes agent expectations.
+**`contributing/rules/github-releases.mdc`** summarizes agent expectations.

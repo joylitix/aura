@@ -1,0 +1,31 @@
+---
+description: Small, incremental git commits per logical change for traceability without chat history.
+alwaysApply: true
+---
+
+# Git: incremental commits
+
+## Expectation
+
+- Prefer **many small commits** over one large “dump” commit. Each commit should be a **single logical step** someone can understand from the message alone—**no dependency on the original chat**.
+- A good commit: **reversible** with `git revert` (or easy bisect), **builds/tests pass** at that point when CI exists.
+
+## Scope per commit (examples)
+
+- One focused change: “add protocol SessionStart type”, “wire daemon stdio framing”, “extension: spawn child process”.
+- If a feature spans multiple packages, either **commit in layers** (protocol → core → daemon → extension) or **one commit per package** with a shared prefix: `feat(ask): …`.
+
+## Commit messages
+
+- Use a **conventional** prefix when helpful: `feat:`, `fix:`, `docs:`, `chore:`, `refactor:`.
+- **Body optional**; include **why** when the diff alone is unclear (migration, protocol version bump, workaround).
+
+## Anti-patterns
+
+- “WIP everything” before push unless you are truly experimental—**squash only** before merge if policy requires; still keep **local** incremental commits until then.
+- Mixing unrelated refactors with feature code in the same commit.
+
+## Agent workflow
+
+- After a coherent slice of work, **commit** instead of leaving a dirty tree across unrelated files.
+- If unsure split vs single commit: default to **split** when the diff touches **unrelated concerns** (e.g. docs + core logic can be two commits: `docs:` then `feat:`).

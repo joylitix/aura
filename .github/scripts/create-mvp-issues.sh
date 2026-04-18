@@ -14,7 +14,7 @@ create() {
 }
 
 create "MVP: Verify POC exit criteria and tag poc-0.1" "## Scope
-Confirm [planning/POC_PLAN.md](https://github.com/joylitix/aura/blob/main/planning/POC_PLAN.md) §1.3 checklist (F5 flow, sandbox, cancel, README POC setup).
+Confirm **aura-plans/POC_PLAN.md** §1.3 checklist (F5 flow, sandbox, cancel, README POC setup)—plans live outside the git repo; see **aura.code-workspace**.
 
 ## Acceptance
 - [ ] Checklist verified in a comment on this issue
@@ -73,7 +73,7 @@ Remote transport for daemon; shared secret or mTLS (pick one, document threat mo
 ## Acceptance
 - [ ] Extension can attach over TCP/Unix with auth
 - [ ] Stdio transport still works
-- [ ] Security notes in \`planning/\` or README"
+- [ ] Security notes in **aura-plans** or README"
 
 create "MVP: CLI — NDJSON session parity" "## Scope
 New \`packages/cli\` (workspace): \`session/start\`, \`chat/appendUser\`, stream events to stdout for CI/scripts.
@@ -101,7 +101,7 @@ Collapsible tool result cards; for proposed edits show diff (\`vscode.diff\` or 
 
 ## Acceptance
 - [ ] User cannot apply without confirm when policy requires
-- [ ] Matches MVP safety row in planning/MVP_PLAN.md"
+- [ ] Matches MVP safety row in **aura-plans/MVP_PLAN.md**"
 
 create "MVP: MCP — read-path tool merge" "## Scope
 Connect stdio MCP server(s); merge **read** tools with namespacing + caps; document conflicts.

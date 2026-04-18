@@ -1,0 +1,26 @@
+{
+  "folders": [
+    {
+      "name": "aura",
+      "path": "."
+    },
+    {
+      "name": "aura-plans",
+      "path": "../aura-plans"
+    }
+  ],
+  "settings": {
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/dist": true,
+      "**/out": true,
+      "**/.docusaurus": true
+    },
+    "files.watcherExclude": {
+      "**/node_modules/**": true,
+      "**/.git/objects/**": true,
+      "**/.docusaurus/**": true
+    }
+  }
+}

@@ -6,7 +6,7 @@ sidebar_position: 1
 
 Aura is under active development. This page describes **direction** at a high level only.
 
-Detailed engineering and delivery plans live **in the repository** (for contributors with repo access), not in the published documentation site. See [CONTRIBUTING](https://github.com/joylitix/aura/blob/main/CONTRIBUTING.md) for workflow. **MVP track:** GitHub [milestone MVP](https://github.com/joylitix/aura/milestone/1) and checklist [planning/MVP_PLAN.md](https://github.com/joylitix/aura/blob/main/planning/MVP_PLAN.md).
+Detailed engineering and delivery plans are maintained in the **aura-plans** workspace companion (open **`aura.code-workspace`** with this repo), not in the published documentation site. See [CONTRIBUTING](https://github.com/joylitix/aura/blob/main/CONTRIBUTING.md) for workflow. **MVP track:** GitHub [milestone MVP](https://github.com/joylitix/aura/milestone/1) and checklist **`aura-plans/MVP_PLAN.md`** (local to maintainers, not on GitHub as a path in this repo).
 
 ## Direction
 

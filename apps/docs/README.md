@@ -1,6 +1,8 @@
 # Aura docs (`@aura/docs`)
 
-Docusaurus site for [Aura](https://github.com/joylitix/aura). Source lives in **`docs/`** under this package.
+Docusaurus site for [Aura](https://github.com/joylitix/aura): **how to use the product** (install, configure, self-host, operate). This package is **not** the internal engineering handbook—for that, open **`../../aura.code-workspace`** and read **`aura-plans/README.md`** and **`aura-plans/AI_CONTEXT.md`** (not in git).
+
+Source pages for this site live in **`docs/`** inside this package (Docusaurus convention—not the same as root **`docs/`**).
 
 ## From the monorepo root
 
