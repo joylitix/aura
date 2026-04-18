@@ -1,5 +1,6 @@
 # Publish the Docusaurus site to GitHub Pages (project site: /<repo>/).
-# Runs only when the push touches paths that affect the built docs (see `paths`).
+# Runs when the push touches paths that affect the built docs (see `paths`), including
+# `versioned_docs/` / `versions.json` after **docs-version-snapshot** merges to main.
 
 name: Docs (GitHub Pages)
 

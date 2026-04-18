@@ -12,6 +12,5 @@ coverage/
 packages/vscode-extension/bundled/
 packages/vscode-extension/out/
 
-# Internal plans + local Cursor files (not in git; use aura-plans + optional .cursor copy)
-planning/
+# Local Cursor copy of rules (optional); see contributing/rules/README.md
 .cursor/

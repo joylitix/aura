@@ -32,6 +32,8 @@ const config: Config = {
           sidebarPath: './sidebars.ts',
           editUrl:
             'https://github.com/joylitix/aura/tree/main/apps/docs/',
+          /** Show unreleased edits under `docs/` as “Next” in the version dropdown. */
+          includeCurrentVersion: true,
         },
         blog: false,
         theme: {
@@ -58,6 +60,10 @@ const config: Config = {
           sidebarId: 'tutorialSidebar',
           position: 'left',
           label: 'Docs',
+        },
+        {
+          type: 'docsVersionDropdown',
+          position: 'right',
         },
         {
           href: 'https://github.com/joylitix/aura',
