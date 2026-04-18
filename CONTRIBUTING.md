@@ -90,8 +90,8 @@ Prefer **small, logical commits**; see `.cursor/rules/incremental-commits.mdc`.
 
 ### Releases (automated)
 
-- **semantic-release** runs on pushes to **`main`** and **`rc/*`** (see `.github/workflows/release.yml`).
-- **`main`**: **stable** semver (`x.y.z`), full **GitHub Release** (not marked pre-release).
+- **semantic-release** runs on pushes to **`rc/*`** and on **workflow_dispatch** (see `.github/workflows/release.yml`). Pushes to **`main`** do **not** run the release job for now—re-add **`main`** to that workflow when you want stable semver from default branch merges.
+- When enabled for **`main`**: **stable** semver (`x.y.z`), full **GitHub Release** (not marked pre-release).
 - **`rc/*`**: **prerelease** semver (`x.y.z-rc.n`), GitHub Release marked **Pre-release** — use for integration and QA before promoting to `main`.
 - Semver is computed from [Conventional Commits](https://www.conventionalcommits.org/) on the **branch that was pushed**; **`CHANGELOG.md`** / **`package.json`** updates follow the same bot commit (`[skip ci]`) pattern on each line.
 - For **`feat/*` → `rc/*`**, **squash merge** + conventional **PR title** is typical (validated by **`Semantic PR title`**). For **`rc/*` → `main`**, prefer a **merge commit** so release notes include each integrated change (see **Release candidates** above).
@@ -103,7 +103,7 @@ Prefer **small, logical commits**; see `.cursor/rules/incremental-commits.mdc`.
 | Workflow | Purpose |
 |----------|---------|
 | `semantic-pr-title.yml` | PR title matches Conventional Commits |
-| `release.yml` | Push to **`main`** or **`rc/*`** → semantic-release (stable vs **`-rc.n`**) |
+| `release.yml` | Push to **`rc/*`** (or manual run) → semantic-release (**`-rc.n`**). **`main`** is currently excluded until stable releases are turned on. |
 | `docs-pages.yml` | Push to **`main`** with changes under **`apps/docs/`**, lockfile, or this workflow → Docusaurus build → **GitHub Pages** (or run **Docs (GitHub Pages)** manually via **Actions → workflow_dispatch**) |
 
 `.cursor/rules/github-releases.mdc` summarizes agent expectations.
