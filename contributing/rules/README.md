@@ -1,12 +1,12 @@
 # Contributor rules (Cursor-compatible)
 
-These `.mdc` files are the **canonical** workflow and documentation policy for this repo. They used to live under **`.cursor/rules/`**; that path is **gitignored** so you can mirror files locally for Cursor.
+These `.mdc` files are the **canonical** workflow and documentation policy for this repo.
 
-**Optional (Cursor):** from the repository root, copy or symlink so Cursor loads them:
+**Local Cursor layout:** **`.cursor/`** is **gitignored** (never pushed to GitHub) but should exist in your clone so Cursor can load rules and scratch plans. Keep **`.cursor/rules/`** in sync with this folder after pulls or edits:
 
 ```bash
-mkdir -p .cursor/rules
+mkdir -p .cursor/rules .cursor/plans
 cp contributing/rules/*.mdc .cursor/rules/
 ```
 
-Edit **`contributing/rules/`** in git when policy changes; refresh your local **`.cursor/rules/`** copy when you pull.
+Scratch notes go under **`.cursor/plans/`** (gitignored); keep that directory if you use Cursor session exports there.
