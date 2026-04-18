@@ -1,6 +1,6 @@
 # Aura docs (`@aura/docs`)
 
-Docusaurus site for [Aura](https://github.com/jennifer-dickinson/aura). Source lives in **`docs/`** under this package.
+Docusaurus site for [Aura](https://github.com/joylitix/aura). Source lives in **`docs/`** under this package.
 
 ## From the monorepo root
 

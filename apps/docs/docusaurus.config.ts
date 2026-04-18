@@ -11,10 +11,10 @@ const config: Config = {
     v4: true,
   },
 
-  url: 'https://jennifer-dickinson.github.io',
+  url: 'https://joylitix.github.io',
   baseUrl: '/aura/',
 
-  organizationName: 'jennifer-dickinson',
+  organizationName: 'joylitix',
   projectName: 'aura',
 
   onBrokenLinks: 'warn',
@@ -31,7 +31,7 @@ const config: Config = {
         docs: {
           sidebarPath: './sidebars.ts',
           editUrl:
-            'https://github.com/jennifer-dickinson/aura/tree/main/apps/docs/',
+            'https://github.com/joylitix/aura/tree/main/apps/docs/',
         },
         blog: false,
         theme: {
@@ -60,7 +60,7 @@ const config: Config = {
           label: 'Docs',
         },
         {
-          href: 'https://github.com/jennifer-dickinson/aura',
+          href: 'https://github.com/joylitix/aura',
           label: 'GitHub',
           position: 'right',
         },
@@ -83,7 +83,7 @@ const config: Config = {
           items: [
             {
               label: 'Repository',
-              href: 'https://github.com/jennifer-dickinson/aura',
+              href: 'https://github.com/joylitix/aura',
             },
           ],
         },

@@ -2,8 +2,9 @@
 
 ## Repository
 
-- **Git remote:** [github.com/jennifer-dickinson/aura](https://github.com/jennifer-dickinson/aura)
-- To host under a **Joylitix** GitHub organization later, use **Settings → General → Transfer repository** (requires org admin).
+- **Git remote:** [github.com/joylitix/aura](https://github.com/joylitix/aura) (Joylitix organization; **private**—sign in with an account that has org access)
+
+To clone or push after the org move, update your local remote if needed: `git remote set-url origin git@github.com:joylitix/aura.git`
 
 ## GitHub workflow
 
