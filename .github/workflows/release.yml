@@ -1,5 +1,5 @@
 # Automated releases: semver from Conventional Commits, CHANGELOG.md, GitHub Release.
-# - main → stable semver (x.y.z)
+# - main: trigger re-enabled in `on.push` when you want stable semver from default branch (currently paused).
 # - rc/* → prerelease semver (x.y.z-rc.n) for staging before merging into main
 
 name: Release
