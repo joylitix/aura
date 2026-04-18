@@ -1,0 +1,13 @@
+---
+description: Releases are automated via semantic-release; use Conventional Commits on main.
+alwaysApply: true
+---
+
+# Releases (semantic-release)
+
+- **Merges to `main`** trigger `.github/workflows/release.yml`, which runs **semantic-release** (see `.releaserc.json`).
+- **Semver** is derived from **Conventional Commits** since the last git tag: `feat` → minor, `fix` / `perf` → patch, `BREAKING CHANGE` or `feat!` → major (see [Angular preset](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-angular)).
+- **`ci`**, **`chore`**, **`docs`**, **`refactor`**, **`test`** commits usually **do not** produce a new version unless configured otherwise—use **`fix:`** or **`feat:`** when a release is intended.
+- **CHANGELOG.md** and **package.json** version are committed by the release job with **`[skip ci]`** to avoid loops.
+- **PR titles** must follow Conventional Commits (enforced by `semantic-pr-title.yml`) because **squash merge** uses the PR title as the mainline commit subject.
+- When implementing something that should **ship in the changelog**, use a **releasable** type (`feat`, `fix`, …) in the **squashed** PR title.

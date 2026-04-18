@@ -70,3 +70,20 @@ See `docs/POC_PLAN.md` and future Docusaurus docs for build and run instructions
 ## Commits
 
 Prefer **small, logical commits**; see `.cursor/rules/incremental-commits.mdc`.
+
+### Releases (automated)
+
+- **semantic-release** runs on every push to **`main`** (see `.github/workflows/release.yml`).
+- It computes **semver** from [Conventional Commits](https://www.conventionalcommits.org/) on **`main`**, updates **`CHANGELOG.md`** and **`package.json`**, creates a **GitHub Release**, and attaches notes (no manual version bump in day-to-day PRs).
+- **Squash merge** is assumed: the **PR title** must be conventional — validated by **`Semantic PR title`** workflow. Examples: `feat: add daemon stdio transport`, `fix: sandbox path escape`.
+- **What bumps the version:** typically **`feat`** (minor), **`fix`** / **`perf`** (patch), **breaking changes** (`feat!:` or `BREAKING CHANGE:` footer) (major). Commits like **`chore:`** / **`docs:`** / **`ci:`** often produce **no** new release (by design).
+- After the release bot pushes **`chore(release): x.y.z [skip ci]`**, the release workflow **skips** to avoid an infinite loop.
+
+## Continuous integration
+
+| Workflow | Purpose |
+|----------|---------|
+| `semantic-pr-title.yml` | PR title matches Conventional Commits |
+| `release.yml` | After merge to `main`, run semantic-release |
+
+`.cursor/rules/github-releases.mdc` summarizes agent expectations.

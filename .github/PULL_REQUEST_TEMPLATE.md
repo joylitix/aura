@@ -2,6 +2,10 @@
 
 <!-- What does this PR change and why? -->
 
+## Title (required for squash merge)
+
+Use a **Conventional Commits** title — it becomes the merge commit on `main` and **feeds automated semver + CHANGELOG** (e.g. `feat(daemon): add stdio transport`, `fix: reject path traversal`).
+
 ## Type
 
 - [ ] `feat` — new feature or behavior
