@@ -37,13 +37,13 @@ Runs `vitest` in `packages/agent-core` (sandbox tests).
 2. `npm run build` at least once (so the bundled daemon exists under `packages/vscode-extension/bundled/`).
 3. **Run and Debug** → **Run Aura extension** (see [.vscode/launch.json](.vscode/launch.json)).
 4. In the new Extension Development Host window, use **File → Open Folder…** and pick a project folder (single root). If you skip this, **Aura: Start session** will prompt you to open a folder—ignore unrelated **Debug Console** lines from Cursor itself (`NoWorkspaceUriError`, `UserNotLoggedInError`, OTLP, sandbox helper, etc.).
-5. Command palette → **Aura: Start session** (`aura.startSession`).
+5. Command palette → **Aura: Start session** (`aura.startSession`) (opens the **Aura** activity bar container and boots the daemon when needed).
 6. If prompted, enter your **OpenAI API key** (stored in Secret storage) when using the OpenAI provider; or set settings to **Ollama** and a model (e.g. a local `llama3.2` or your preferred tag).
-7. Use the **input box for each turn** — you can have a **back-and-forth** in one session; leave the message **empty** or press **Esc** to end. Replies and tool traces appear in the **Aura** output channel.
+7. Use the **Chat** webview in the **Aura** sidebar: **Send** for each turn, **Stop** to cancel the in-flight turn, **New chat** for a new thread, and the thread dropdown to switch between in-memory threads. Optional: command **Aura: Toggle developer protocol log** mirrors daemon stdout NDJSON to the **Aura (Protocol)** output channel; daemon stderr goes to the **Aura** output channel.
 
-**Ask / POC (read-only):** The agent can **read and search** files (`read_file`, `glob_file_search`, `grep`) but **cannot create, edit, or delete** files by design (see **`aura-plans/POC_PLAN.md`** when using **`aura.code-workspace`**). Agent / write-capable modes are out of scope for this POC.
+**Ask / POC (read-only):** The agent can **read and search** files (`read_file`, `glob_file_search`, `grep`) but **cannot create, edit, or delete** files by design. Agent / write-capable modes are tracked for MVP (see [docs/mvp.plan.md](docs/mvp.plan.md)).
 
-**Cancel / dispose:** Stopping the debug session or deactivating the host disposes the extension; the child daemon process is signalled. Ending the chat with an empty message sends `session/cancel` then terminates the child.
+**Cancel / dispose:** Stopping the debug session or deactivating the host disposes the extension; the child daemon process is signalled. **Stop** sends `session/cancel` for the active turn; **New chat** / switching threads disposes the daemon process.
 
 ### Run the daemon from the terminal (smoke)
 
@@ -62,7 +62,7 @@ You should get a `session/ack` line. For a follow-up, pipe another line with `ch
 |------|------|
 | [apps/docs](apps/docs) | **Product** documentation (Docusaurus): how to install, configure, and use Aura (`npm run docs:dev` from root) |
 | [contributing/rules](contributing/rules) | **Tracked** workflow and docs policy (Cursor-compatible `.mdc`); optional copy to gitignored `.cursor/rules/` |
-| [docs/README.md](docs/README.md) | Pointer to **aura-plans** (internal plans, not in git) |
+| [docs/](docs/) | Engineering notes and [MVP build plan](docs/mvp.plan.md) (tracked in git) |
 | [packages/protocol](packages/protocol) | Versioned stdio/NDJSON message types |
 | [packages/agent-core](packages/agent-core) | Ask loop, tools, LLM clients, transcript |
 | [packages/agent-daemon](packages/agent-daemon) | stdio process bundled for the extension |
@@ -71,8 +71,8 @@ You should get a `session/ack` line. For a follow-up, pipe another line with `ch
 ## Docs
 
 - **Using Aura (operators / users):** [apps/docs](apps/docs) — run `npm run docs:dev`. [CONTRIBUTING](CONTRIBUTING.md) lists CI, including the GitHub Pages workflow when relevant paths change.
-- **Working on the repo (maintainers + AI):** open **`aura.code-workspace`** and read **`aura-plans/README.md`** (POC/MVP specs and `AI_CONTEXT.md` live there; not committed in this repo).
+- **Working on the repo (maintainers + AI):** [CONTRIBUTING.md](CONTRIBUTING.md), [docs/mvp.plan.md](docs/mvp.plan.md), and [contributing/rules/](contributing/rules/) (optionally copy `.mdc` files into gitignored `.cursor/rules/` for Cursor).
 
 ## MVP track
 
-Engineering checklist and **issue order**: **`aura-plans/MVP_PLAN.md`** (workspace companion). GitHub: [MVP milestone](https://github.com/joylitix/aura/milestone/1), label [`mvp`](https://github.com/joylitix/aura/issues?q=is%3Aopen+is%3Aissue+label%3Amvp).
+**Build plan:** [docs/mvp.plan.md](docs/mvp.plan.md). **Issue tracking:** [MVP milestone](https://github.com/joylitix/aura/milestone/1), label [`mvp`](https://github.com/joylitix/aura/issues?q=is%3Aopen+is%3Aissue+label%3Amvp).

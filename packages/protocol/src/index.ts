@@ -1,6 +1,6 @@
 /**
  * Aura wire protocol — NDJSON one JSON object per line on daemon stdin/stdout.
- * See aura-plans/POC_PLAN.md (workspace companion). No vscode imports.
+ * NDJSON session contract; see repo README (POC) and docs/mvp.plan.md (MVP). No vscode imports.
  */
 
 export const SCHEMA_VERSION = '0.1.0' as const;

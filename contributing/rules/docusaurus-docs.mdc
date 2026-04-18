@@ -7,27 +7,28 @@ alwaysApply: true
 
 ## Stack
 
-- **Public / versioned documentation** for Aura lives in **Docusaurus** at **`apps/docs/`** (monorepo workspace **`@aura/docs`**): `docusaurus.config`, `sidebars`, and `apps/docs/docs/` for MD/MDX.
+- **Public / versioned documentation** for Aura lives in **Docusaurus** at **`apps/docs/`** (monorepo workspace **`@aura/docs`**): `docusaurus.config`, `sidebars`, **`apps/docs/docs/`** for the **current** (Next) MD/MDX, plus **`versioned_docs/`** / **`versions.json`** for frozen releases.
+- **Cutting a doc version:** locally, `npm run docs:version --workspace=@aura/docs -- <semver>` (or `cd apps/docs && npm run docs:version -- <semver>`). **CI:** on each **stable** (non-prerelease) **GitHub Release**, **`.github/workflows/docs-version-snapshot.yml`** runs `docusaurus docs:version` at the release tag and pushes the snapshot to the default branch (enable **Actions** write access under branch protection if pushes are blocked).
 - Root scripts: **`docs:dev`**, **`docs:build`**, **`docs:serve`**. Treat **`docs:build` green** as part of “done” for doc-affecting changes when CI exists.
 
 ## What belongs in published docs (strict)
 
 - **`apps/docs/docs/`** is for **end-user, operator, and contributor-facing** material that is safe to publish: install, usage, high-level **roadmap** blurbs, troubleshooting, reference.
-- **Never** put **full internal plans** in Docusaurus: no detailed POC plans, sprint sequences, exhaustive scope checklists, or execution specs. Those belong **outside** the docs site: canonical **aura-plans** workspace (see **`aura-plans/README.md`**), optional local scratch under **`.cursor/plans/`** (not in git), or private notes—not under **`apps/docs/docs/`**.
+- **Never** put **full internal plans** in Docusaurus: no detailed POC plans, sprint sequences, exhaustive scope checklists, or execution specs. Put those in **`docs/`** at the repo root (e.g. **`docs/mvp.plan.md`**), GitHub issues/wiki, or private notes—not under **`apps/docs/docs/`**.
 - **Roadmaps** in published docs must stay **high level** (themes, phases, “near term / next”—no day-by-day or task-level plans).
 
 ## When to write docs
 
 - **Every user-visible or operator-visible feature** (CLI flags, extension settings, daemon flags, compose profiles, MCP, modes): add or update a **docs page** in the same PR or immediately after—no “doc later” unless the issue explicitly tracks it.
-- **Breaking protocol, config, or RPC**: update **versioned** docs and note migration (use Docusaurus **versioning** when publishing multiple releases).
-- When you need to capture a **full plan**, edit files in the **aura-plans** workspace (not committed in this repo); **do not** duplicate the full plan into **`apps/docs`**.
+- **Breaking protocol, config, or RPC**: update **current** docs in **`apps/docs/docs/`** and add a **migration** note; ship a new **stable** release so **docs-version-snapshot** freezes a new Docusaurus version (or run **`docs:version` locally** and PR if you must snapshot without a release).
+- When you need to capture a **full plan**, edit **`docs/*.md`** in this repository (or your team’s issue tracker); **do not** duplicate the full plan into **`apps/docs`**.
 
 ## Structure expectations
 
 - **User guide**: install, first session, modes, settings, troubleshooting.
 - **Self-host**: Docker/compose, env vars, networking, security defaults.
 - **Reference**: protocol schema version, config keys, CLI reference.
-- **Contributing**: monorepo layout, how to run extension/daemon; link to **CONTRIBUTING** / **aura-plans** for internal plans (not the full plan in Docusaurus).
+- **Contributing**: monorepo layout, how to run extension/daemon; link to **CONTRIBUTING** and **`docs/`** for internal plans (not the full plan in Docusaurus).
 
 ## Publishing mindset
 
