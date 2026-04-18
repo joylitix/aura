@@ -6,6 +6,11 @@
 
 To clone or push after the org move, update your local remote if needed: `git remote set-url origin git@github.com:joylitix/aura.git`
 
+### MVP track (GitHub)
+
+- **Milestone:** [MVP](https://github.com/joylitix/aura/milestone/1) — chunked issues with label **`mvp`**.
+- **Checklist / order:** [planning/MVP_PLAN.md](planning/MVP_PLAN.md) (internal; links every ticket). Work issues **one at a time** in the suggested order unless a PR explicitly depends on another.
+
 ## GitHub workflow
 
 ### Branches

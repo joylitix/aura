@@ -70,3 +70,7 @@ You should get a `session/ack` line. For a follow-up, pipe another line with `ch
 ## Docs
 
 - Public docs: `npm run docs:dev` — [CONTRIBUTING](CONTRIBUTING.md) lists CI, including the GitHub Pages workflow for the doc site when relevant paths change.
+
+## MVP track
+
+Engineering checklist and **issue order**: [planning/MVP_PLAN.md](planning/MVP_PLAN.md). GitHub: [MVP milestone](https://github.com/joylitix/aura/milestone/1), label [`mvp`](https://github.com/joylitix/aura/issues?q=is%3Aopen+is%3Aissue+label%3Amvp).
