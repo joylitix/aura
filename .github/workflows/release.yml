@@ -1,0 +1,50 @@
+# Automated releases: semver from Conventional Commits, CHANGELOG.md, GitHub Release.
+# - main → stable semver (x.y.z)
+# - rc/* → prerelease semver (x.y.z-rc.n) for staging before merging into main
+
+name: Release
+
+on:
+  push:
+    branches:
+      # semantic-release from main is paused until product development begins (avoid 0.x bumps from infra/docs-only work). Re-add `main` here when you want stable semver on every qualifying merge to main.
+      - "rc/*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+concurrency:
+  group: release-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    # Avoid re-entrance when semantic-release pushes the chore(release) commit
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'push' && !contains(github.event.head_commit.message, '[skip ci]'))
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release

@@ -2,8 +2,9 @@
 
 ## Repository
 
-- **Git remote:** [github.com/jennifer-dickinson/aura](https://github.com/jennifer-dickinson/aura)
-- To host under a **Joylitix** GitHub organization later, use **Settings → General → Transfer repository** (requires org admin).
+- **Git remote:** [github.com/joylitix/aura](https://github.com/joylitix/aura) (Joylitix organization; **private**—sign in with an account that has org access)
+
+To clone or push after the org move, update your local remote if needed: `git remote set-url origin git@github.com:joylitix/aura.git`
 
 ## GitHub workflow
 
@@ -21,6 +22,18 @@
 | `refactor/` | Internal structure change; behavior preserved |
 
 Examples: `feat/ask-stdio-daemon`, `fix/path-sandbox-escape`, `docs/self-host-compose`.
+
+### Release candidates (`rc/*`)
+
+Work that is intended for the **next stable release** should flow through **`rc/*`** before **`main`**:
+
+1. **Create** an RC line from current `main`, e.g. **`rc/0.2.0`** or **`rc/mvp-1`** (pick one naming style per release train and stick to it).
+2. **Merge feature branches** into the RC branch via PR (**squash** is fine; **conventional PR title** still applies).
+3. **Stabilize** on `rc/*`: run tests, Copilot review, docs; **semantic-release** publishes **prereleases** from `rc/*` (tags like **`x.y.z-rc.n`**, GitHub “Pre-release”) so installers can dogfood without promoting stable.
+4. When the RC is approved, open **one** PR: **`rc/<name>` → `main`**. This is the merge that **promotes** work to stable. **Prefer a merge commit** (not squash) for `rc → main` so all conventional commits remain visible to **semantic-release** and the changelog; if you must squash, use one **conventional** title that summarizes the release (e.g. `feat: release 0.2.0`).
+5. **Do not** land unrelated new features on **`main`** during an active RC freeze without team agreement—use a **new `rc/*`** line or wait until after the RC lands on `main`.
+
+**Hotfix path:** urgent production fixes can go **`fix/*` → `main`** by exception; document in the PR why the RC train was bypassed.
 
 - **One feature / concern per branch** where possible. After opening a PR, **avoid piling unrelated commits** for “the next thing”—open a **new branch after `main` is updated** from the merge.
 
@@ -65,8 +78,32 @@ In **Settings → Rules → Rulesets** (or classic branch protection):
 
 ## Local development
 
-See `docs/POC_PLAN.md` and future Docusaurus docs for build and run instructions as the codebase grows.
+- **Documentation site** (Docusaurus) lives in **`apps/docs/`**. From the repo root:
+  - `npm install` — install all workspace dependencies (once, or after lockfile changes).
+  - `npm run docs:dev` — local preview at `http://localhost:3000` (with this repo’s GitHub Pages **`baseUrl`**, open **`/aura/`** on the dev server if configured).
+  - `npm run docs:build` — production build into `apps/docs/build/`.
+- **Internal engineering plans** (full POC specs, sprint breakdowns, etc.) are **not** part of the published Docusaurus site. Keep them under repo paths such as **`planning/`** (for example **`planning/POC_PLAN.md`** for the detailed POC plan). The docs site may include **high-level roadmaps** only—see **`apps/docs/docs/development/roadmap.md`**.
 
 ## Commits
 
 Prefer **small, logical commits**; see `.cursor/rules/incremental-commits.mdc`.
+
+### Releases (automated)
+
+- **semantic-release** runs on pushes to **`rc/*`** and on **workflow_dispatch** (see `.github/workflows/release.yml`). Pushes to **`main`** do **not** run the release job for now—re-add **`main`** to that workflow when you want stable semver from default branch merges.
+- When enabled for **`main`**: **stable** semver (`x.y.z`), full **GitHub Release** (not marked pre-release).
+- **`rc/*`**: **prerelease** semver (`x.y.z-rc.n`), GitHub Release marked **Pre-release** — use for integration and QA before promoting to `main`.
+- Semver is computed from [Conventional Commits](https://www.conventionalcommits.org/) on the **branch that was pushed**; **`CHANGELOG.md`** / **`package.json`** updates follow the same bot commit (`[skip ci]`) pattern on each line.
+- For **`feat/*` → `rc/*`**, **squash merge** + conventional **PR title** is typical (validated by **`Semantic PR title`**). For **`rc/*` → `main`**, prefer a **merge commit** so release notes include each integrated change (see **Release candidates** above).
+- **What bumps the version:** typically **`feat`** (minor), **`fix`** / **`perf`** (patch), **breaking changes** (`feat!:` or `BREAKING CHANGE:` footer) (major). Commits like **`chore:`** / **`docs:`** / **`ci:`** often produce **no** new release (by design).
+- After the release bot pushes **`chore(release): x.y.z [skip ci]`**, the release workflow **skips** to avoid an infinite loop.
+
+## Continuous integration
+
+| Workflow | Purpose |
+|----------|---------|
+| `semantic-pr-title.yml` | PR title matches Conventional Commits |
+| `release.yml` | Push to **`rc/*`** (or manual run) → semantic-release (**`-rc.n`**). **`main`** is currently excluded until stable releases are turned on. |
+| `docs-pages.yml` | Push to **`main`** with changes under **`apps/docs/`**, lockfile, or this workflow → Docusaurus build → **GitHub Pages** (or run **Docs (GitHub Pages)** manually via **Actions → workflow_dispatch**) |
+
+`.cursor/rules/github-releases.mdc` summarizes agent expectations.
