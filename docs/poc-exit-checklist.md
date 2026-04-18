@@ -23,11 +23,13 @@ Use this list before tagging **`poc-0.1`**. Record the date and commit SHA in th
 
 ## Tag
 
-After the above:
+After the above, publish an **annotated** tag on the commit you are certifying (often the last `main` revision that still matches POC-only scope, or the merge commit if verification ran post-merge):
 
 ```bash
-git tag -a poc-0.1 -m "POC baseline verified (Ask-only, stdio NDJSON)"
+git tag -a poc-0.1 <COMMIT_SHA> -m "POC baseline verified (Ask-only, stdio NDJSON)"
 git push origin poc-0.1
 ```
 
 If the tag already exists on the remote, do not move it without team agreement; close the issue with a pointer to the existing tag.
+
+For the MVP phase 1 PR that introduced chat transport, `poc-0.1` is expected to reference the **pre–MVP UI** `main` tip (`git merge-base main <feature-branch>`) unless the team chooses to re-tag after a dedicated verification commit.
