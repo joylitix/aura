@@ -37,13 +37,13 @@ Runs `vitest` in `packages/agent-core` (sandbox tests).
 2. `npm run build` at least once (so the bundled daemon exists under `packages/vscode-extension/bundled/`).
 3. **Run and Debug** → **Run Aura extension** (see [.vscode/launch.json](.vscode/launch.json)).
 4. In the new Extension Development Host window, use **File → Open Folder…** and pick a project folder (single root). If you skip this, **Aura: Start session** will prompt you to open a folder—ignore unrelated **Debug Console** lines from Cursor itself (`NoWorkspaceUriError`, `UserNotLoggedInError`, OTLP, sandbox helper, etc.).
-5. Command palette → **Aura: Start session** (`aura.startSession`).
+5. Command palette → **Aura: Start session** (`aura.startSession`) (opens the **Aura** activity bar container and boots the daemon when needed).
 6. If prompted, enter your **OpenAI API key** (stored in Secret storage) when using the OpenAI provider; or set settings to **Ollama** and a model (e.g. a local `llama3.2` or your preferred tag).
-7. Use the **input box for each turn** — you can have a **back-and-forth** in one session; leave the message **empty** or press **Esc** to end. Replies and tool traces appear in the **Aura** output channel.
+7. Use the **Chat** webview in the **Aura** sidebar: **Send** for each turn, **Stop** to cancel the in-flight turn, **New chat** for a new thread, and the thread dropdown to switch between in-memory threads. Optional: command **Aura: Toggle developer protocol log** mirrors daemon stdout NDJSON to the **Aura (Protocol)** output channel; daemon stderr goes to the **Aura** output channel.
 
-**Ask / POC (read-only):** The agent can **read and search** files (`read_file`, `glob_file_search`, `grep`) but **cannot create, edit, or delete** files by design. Agent / write-capable modes are out of scope for this POC.
+**Ask / POC (read-only):** The agent can **read and search** files (`read_file`, `glob_file_search`, `grep`) but **cannot create, edit, or delete** files by design. Agent / write-capable modes are tracked for MVP (see [docs/mvp.plan.md](docs/mvp.plan.md)).
 
-**Cancel / dispose:** Stopping the debug session or deactivating the host disposes the extension; the child daemon process is signalled. Ending the chat with an empty message sends `session/cancel` then terminates the child.
+**Cancel / dispose:** Stopping the debug session or deactivating the host disposes the extension; the child daemon process is signalled. **Stop** sends `session/cancel` for the active turn; **New chat** / switching threads disposes the daemon process.
 
 ### Run the daemon from the terminal (smoke)
 
