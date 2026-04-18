@@ -1,7 +1,7 @@
 {
   "name": "aura-vscode",
   "displayName": "Aura",
-  "description": "Joylitix Aura — Ask-mode agent (POC)",
+  "description": "Joylitix Aura — Ask-mode agent (MVP track: chat + daemon)",
   "version": "0.0.0",
   "publisher": "joylitix",
   "private": true,
@@ -9,18 +9,45 @@
     "vscode": "^1.85.0"
   },
   "categories": ["Other"],
-  "activationEvents": ["onCommand:aura.startSession"],
+  "activationEvents": ["onCommand:aura.startSession", "onView:aura.chatView"],
   "main": "./out/extension.js",
   "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "aura-sidebar",
+          "title": "Aura",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "aura-sidebar": [
+        {
+          "type": "webview",
+          "id": "aura.chatView",
+          "name": "Chat"
+        }
+      ]
+    },
     "commands": [
       {
         "command": "aura.startSession",
         "title": "Aura: Start session"
+      },
+      {
+        "command": "aura.toggleProtocolLog",
+        "title": "Aura: Toggle developer protocol log"
       }
     ],
     "configuration": {
       "title": "Aura",
       "properties": {
+        "aura.developer.showProtocolLog": {
+          "type": "boolean",
+          "default": false,
+          "description": "When enabled, mirror daemon stdout NDJSON lines to the Aura (Protocol) output channel."
+        },
         "aura.provider": {
           "type": "string",
           "enum": ["openai", "ollama"],
