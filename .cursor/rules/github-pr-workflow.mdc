@@ -1,0 +1,35 @@
+---
+description: GitHub branches, labels, PRs, Copilot review; wait for merge before next major work.
+alwaysApply: true
+---
+
+# GitHub: branches, labels, merge cadence
+
+## Branches (major / non-trivial work)
+
+- New work from **`main`**: create a **feature branch** with a **type prefix** aligned to the change:
+  - `feat/…` — new behavior or capability
+  - `fix/…` — bug fixes
+  - `docs/…` — documentation / Docusaurus
+  - `chore/…` — tooling, CI, dependency bumps, non-product refactors
+  - `refactor/…` — internal restructure, same external behavior
+- **Do not** land multiple unrelated “major” efforts in one branch; split by concern.
+
+## Labels
+
+- On GitHub issues/PRs, use labels (`feat`, `fix`, `docs`, `chore`, etc.) consistent with the change. **Repository must have these labels created** (Settings → Labels); match branch/PR intent.
+
+## Pull requests & Copilot
+
+- Use **pull requests** into `main` (no direct large pushes to `main` for feature work).
+- Enable **GitHub Copilot code review** on the repository (owner setting); treat Copilot feedback like human review.
+- Use `.github/PULL_REQUEST_TEMPLATE.md` and fill type + checklist.
+
+## Merge-first workflow
+
+- After submitting work, **wait for PR merge** (or explicit close) before starting the **next** major feature branch from **updated `main`**. Avoid long chains of dependent unmerged branches without team agreement.
+
+## Agent workflow
+
+- When implementing a **large** change, suggest or use a **`feat/…` or `fix/…` branch** and **commit incrementally** per `.cursor/rules/incremental-commits.mdc`.
+- Do **not** continue stacking unrelated features in the same branch/session without a merge checkpoint—hand off with a clean PR state instead.
