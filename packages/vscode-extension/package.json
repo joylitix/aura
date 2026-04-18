@@ -1,0 +1,63 @@
+{
+  "name": "aura-vscode",
+  "displayName": "Aura",
+  "description": "Joylitix Aura — Ask-mode agent (POC)",
+  "version": "0.0.0",
+  "publisher": "joylitix",
+  "private": true,
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Other"],
+  "activationEvents": ["onCommand:aura.startSession"],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "aura.startSession",
+        "title": "Aura: Start session"
+      }
+    ],
+    "configuration": {
+      "title": "Aura",
+      "properties": {
+        "aura.provider": {
+          "type": "string",
+          "enum": ["openai", "ollama"],
+          "default": "openai",
+          "description": "LLM backend for the daemon."
+        },
+        "aura.model": {
+          "type": "string",
+          "default": "gpt-4o-mini",
+          "description": "Model id passed to the provider."
+        },
+        "aura.openaiBaseUrl": {
+          "type": "string",
+          "default": "https://api.openai.com/v1",
+          "description": "OpenAI-compatible API base URL (no trailing slash)."
+        },
+        "aura.ollamaBaseUrl": {
+          "type": "string",
+          "default": "http://127.0.0.1:11434",
+          "description": "Ollama HTTP base URL."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "prebuild": "npm run build --workspace=@aura/agent-daemon",
+    "build": "node ./scripts/compile.mjs",
+    "vscode:prepublish": "npm run build",
+    "compile": "npm run build"
+  },
+  "dependencies": {
+    "@aura/protocol": "0.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "esbuild": "^0.25.0",
+    "typescript": "~5.8.0"
+  }
+}

@@ -80,6 +80,8 @@ In **Settings → Rules → Rulesets** (or classic branch protection):
 
 - **Documentation site** (Docusaurus) lives in **`apps/docs/`**. From the repo root:
   - `npm install` — install all workspace dependencies (once, or after lockfile changes).
+  - `npm run build` — compile protocol, agent packages, and the VS Code extension; copy the daemon bundle (see [README](README.md) “POC setup” for F5 and LLM requirements).
+  - `npm test` — runs `vitest` in **`packages/agent-core`**, etc.
   - `npm run docs:dev` — local preview at `http://localhost:3000` (with this repo’s GitHub Pages **`baseUrl`**, open **`/aura/`** on the dev server if configured).
   - `npm run docs:build` — production build into `apps/docs/build/`.
 - **Internal engineering plans** (full POC specs, sprint breakdowns, etc.) are **not** part of the published Docusaurus site. Keep them under repo paths such as **`planning/`** (for example **`planning/POC_PLAN.md`** for the detailed POC plan). The docs site may include **high-level roadmaps** only—see **`apps/docs/docs/development/roadmap.md`**.

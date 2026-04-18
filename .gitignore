@@ -9,3 +9,5 @@ build/
 .env.*
 !.env.example
 coverage/
+packages/vscode-extension/bundled/
+packages/vscode-extension/out/

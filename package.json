@@ -5,18 +5,24 @@
   "description": "Aura — Joylitix self-hosted agent platform (monorepo root)",
   "license": "UNLICENSED",
   "workspaces": [
-    "apps/*"
+    "apps/*",
+    "packages/*"
   ],
   "engines": {
     "node": ">=20"
   },
   "scripts": {
     "release": "semantic-release",
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
     "docs:dev": "npm run start --workspace=@aura/docs",
     "docs:build": "npm run build --workspace=@aura/docs",
     "docs:serve": "npm run serve --workspace=@aura/docs"
   },
   "devDependencies": {
+    "esbuild": "^0.25.0",
+    "typescript": "~5.8.0",
+    "vitest": "^3.0.0",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/commit-analyzer": "^13.0.1",
     "@semantic-release/git": "^10.0.1",

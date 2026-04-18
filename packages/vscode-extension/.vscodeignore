@@ -1,0 +1,8 @@
+**/.vscode/**
+**/*.map
+**/*.ts
+!out/
+!bundled/
+!package.json
+!package-lock.json
+scripts/

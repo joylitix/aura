@@ -1,0 +1,19 @@
+{
+  "name": "@aura/agent-daemon",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "aura-daemon": "./dist/daemon.mjs"
+  },
+  "scripts": {
+    "prebuild": "npm run build --workspace=@aura/protocol && npm run build --workspace=@aura/agent-core",
+    "build": "esbuild src/main.ts --bundle --platform=node --format=esm --target=node20 --outfile=dist/daemon.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "start": "node dist/daemon.mjs"
+  },
+  "dependencies": {
+    "@aura/agent-core": "0.0.0",
+    "@aura/protocol": "0.0.0"
+  }
+}
