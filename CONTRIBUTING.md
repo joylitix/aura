@@ -1,5 +1,10 @@
 # Contributing to Aura
 
+## Repository
+
+- **Git remote:** [github.com/jennifer-dickinson/aura](https://github.com/jennifer-dickinson/aura)
+- To host under a **Joylitix** GitHub organization later, use **Settings → General → Transfer repository** (requires org admin).
+
 ## GitHub workflow
 
 ### Branches
@@ -21,7 +26,7 @@ Examples: `feat/ask-stdio-daemon`, `fix/path-sandbox-escape`, `docs/self-host-co
 
 ### Labels (GitHub)
 
-Use labels on **issues and PRs** so release notes and filtering stay sane. Suggested set (create them in the repo **Settings → Labels** if missing):
+Use labels on **issues and PRs** so release notes and filtering stay sane. This repo includes **`feat`**, **`fix`**, **`docs`**, **`chore`**, **`refactor`**, **`blocked`** (GitHub’s default labels remain available too).
 
 | Label | Meaning |
 |-------|---------|
@@ -29,6 +34,7 @@ Use labels on **issues and PRs** so release notes and filtering stay sane. Sugge
 | `fix` | Bug fix |
 | `docs` | Documentation |
 | `chore` | Maintenance |
+| `refactor` | Internal restructure |
 | `blocked` | Waiting on external input |
 
 Match the **branch prefix** and **PR title** when applicable (e.g. `feat: add stdio transport`).
@@ -44,7 +50,7 @@ Match the **branch prefix** and **PR title** when applicable (e.g. `feat: add st
 Repository **owners** should enable:
 
 1. **Settings → Copilot** (organization/repo depending on plan) — ensure **Copilot** is allowed for this repo.
-2. **Settings → Code security and analysis** (or **Pull requests → Copilot**) — turn on **Copilot code review** / **Copilot coding agent** per GitHub’s current UI for automated PR feedback.
+2. Turn on **Copilot code review** for pull requests (see [GitHub Docs: Using Copilot code review](https://docs.github.com/en/copilot/using-github-copilot/code-review/using-copilot-code-review)).
 
 Contributors: treat Copilot comments like any reviewer—address or reply with why something is deferred.
 
