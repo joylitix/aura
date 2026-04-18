@@ -7,12 +7,13 @@ alwaysApply: true
 
 ## Branches (major / non-trivial work)
 
-- New work from **`main`**: create a **feature branch** with a **type prefix** aligned to the change:
+- New work from **`main`** or from the active **`rc/*`** line: create a **feature branch** with a **type prefix** aligned to the change:
   - `feat/…` — new behavior or capability
   - `fix/…` — bug fixes
   - `docs/…` — documentation / Docusaurus
   - `chore/…` — tooling, CI, dependency bumps, non-product refactors
   - `refactor/…` — internal restructure, same external behavior
+- **Release-train default:** merge **`feat/*` → `rc/<release>`** first; when the RC is ready, merge **`rc/<release>` → `main`** (stable). Only **`main`** and **`rc/*`** participate in automated semver (see `.cursor/rules/github-releases.mdc`).
 - **Do not** land multiple unrelated “major” efforts in one branch; split by concern.
 
 ## Labels
@@ -21,7 +22,7 @@ alwaysApply: true
 
 ## Pull requests & Copilot
 
-- Use **pull requests** into `main` (no direct large pushes to `main` for feature work).
+- Use **pull requests** into **`rc/*`** (features) and then **`rc/*` → `main`** for promotion, or **hotfix exception → `main`** per CONTRIBUTING (no direct large unreviewed pushes).
 - Enable **GitHub Copilot code review** on the repository (owner setting); treat Copilot feedback like human review.
 - Use `.github/PULL_REQUEST_TEMPLATE.md` and fill type + checklist.
 

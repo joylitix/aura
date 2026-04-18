@@ -1,11 +1,14 @@
 # Automated releases: semver from Conventional Commits, CHANGELOG.md, GitHub Release.
-# Requires squash/merge commits on main that follow conventional format (feat!, fix, etc.).
+# - main → stable semver (x.y.z)
+# - rc/* → prerelease semver (x.y.z-rc.n) for staging before merging into main
 
 name: Release
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - "rc/*"
   workflow_dispatch:
 
 permissions:

@@ -22,6 +22,18 @@
 
 Examples: `feat/ask-stdio-daemon`, `fix/path-sandbox-escape`, `docs/self-host-compose`.
 
+### Release candidates (`rc/*`)
+
+Work that is intended for the **next stable release** should flow through **`rc/*`** before **`main`**:
+
+1. **Create** an RC line from current `main`, e.g. **`rc/0.2.0`** or **`rc/mvp-1`** (pick one naming style per release train and stick to it).
+2. **Merge feature branches** into the RC branch via PR (**squash** is fine; **conventional PR title** still applies).
+3. **Stabilize** on `rc/*`: run tests, Copilot review, docs; **semantic-release** publishes **prereleases** from `rc/*` (tags like **`x.y.z-rc.n`**, GitHub “Pre-release”) so installers can dogfood without promoting stable.
+4. When the RC is approved, open **one** PR: **`rc/<name>` → `main`**. This is the merge that **promotes** work to stable. **Prefer a merge commit** (not squash) for `rc → main` so all conventional commits remain visible to **semantic-release** and the changelog; if you must squash, use one **conventional** title that summarizes the release (e.g. `feat: release 0.2.0`).
+5. **Do not** land unrelated new features on **`main`** during an active RC freeze without team agreement—use a **new `rc/*`** line or wait until after the RC lands on `main`.
+
+**Hotfix path:** urgent production fixes can go **`fix/*` → `main`** by exception; document in the PR why the RC train was bypassed.
+
 - **One feature / concern per branch** where possible. After opening a PR, **avoid piling unrelated commits** for “the next thing”—open a **new branch after `main` is updated** from the merge.
 
 ### Labels (GitHub)
@@ -73,9 +85,11 @@ Prefer **small, logical commits**; see `.cursor/rules/incremental-commits.mdc`.
 
 ### Releases (automated)
 
-- **semantic-release** runs on every push to **`main`** (see `.github/workflows/release.yml`).
-- It computes **semver** from [Conventional Commits](https://www.conventionalcommits.org/) on **`main`**, updates **`CHANGELOG.md`** and **`package.json`**, creates a **GitHub Release**, and attaches notes (no manual version bump in day-to-day PRs).
-- **Squash merge** is assumed: the **PR title** must be conventional — validated by **`Semantic PR title`** workflow. Examples: `feat: add daemon stdio transport`, `fix: sandbox path escape`.
+- **semantic-release** runs on pushes to **`main`** and **`rc/*`** (see `.github/workflows/release.yml`).
+- **`main`**: **stable** semver (`x.y.z`), full **GitHub Release** (not marked pre-release).
+- **`rc/*`**: **prerelease** semver (`x.y.z-rc.n`), GitHub Release marked **Pre-release** — use for integration and QA before promoting to `main`.
+- Semver is computed from [Conventional Commits](https://www.conventionalcommits.org/) on the **branch that was pushed**; **`CHANGELOG.md`** / **`package.json`** updates follow the same bot commit (`[skip ci]`) pattern on each line.
+- For **`feat/*` → `rc/*`**, **squash merge** + conventional **PR title** is typical (validated by **`Semantic PR title`**). For **`rc/*` → `main`**, prefer a **merge commit** so release notes include each integrated change (see **Release candidates** above).
 - **What bumps the version:** typically **`feat`** (minor), **`fix`** / **`perf`** (patch), **breaking changes** (`feat!:` or `BREAKING CHANGE:` footer) (major). Commits like **`chore:`** / **`docs:`** / **`ci:`** often produce **no** new release (by design).
 - After the release bot pushes **`chore(release): x.y.z [skip ci]`**, the release workflow **skips** to avoid an infinite loop.
 
@@ -84,6 +98,6 @@ Prefer **small, logical commits**; see `.cursor/rules/incremental-commits.mdc`.
 | Workflow | Purpose |
 |----------|---------|
 | `semantic-pr-title.yml` | PR title matches Conventional Commits |
-| `release.yml` | After merge to `main`, run semantic-release |
+| `release.yml` | Push to **`main`** or **`rc/*`** → semantic-release (stable vs **`-rc.n`**) |
 
 `.cursor/rules/github-releases.mdc` summarizes agent expectations.
