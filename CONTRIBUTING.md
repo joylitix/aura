@@ -77,7 +77,11 @@ In **Settings → Rules → Rulesets** (or classic branch protection):
 
 ## Local development
 
-See `docs/POC_PLAN.md` and future Docusaurus docs for build and run instructions as the codebase grows.
+- **Documentation site** (Docusaurus) lives in **`apps/docs/`**. From the repo root:
+  - `npm install` — install all workspace dependencies (once, or after lockfile changes).
+  - `npm run docs:dev` — local preview at `http://localhost:3000` (with this repo’s GitHub Pages **`baseUrl`**, open **`/aura/`** on the dev server if configured).
+  - `npm run docs:build` — production build into `apps/docs/build/`.
+- **Internal engineering plans** (full POC specs, sprint breakdowns, etc.) are **not** part of the published Docusaurus site. Keep them under repo paths such as **`planning/`** (for example **`planning/POC_PLAN.md`** for the detailed POC plan). The docs site may include **high-level roadmaps** only—see **`apps/docs/docs/development/roadmap.md`**.
 
 ## Commits
 
@@ -99,5 +103,6 @@ Prefer **small, logical commits**; see `.cursor/rules/incremental-commits.mdc`.
 |----------|---------|
 | `semantic-pr-title.yml` | PR title matches Conventional Commits |
 | `release.yml` | Push to **`main`** or **`rc/*`** → semantic-release (stable vs **`-rc.n`**) |
+| `docs-pages.yml` | Push to **`main`** with changes under **`apps/docs/`**, lockfile, or this workflow → Docusaurus build → **GitHub Pages** (or run **Docs (GitHub Pages)** manually via **Actions → workflow_dispatch**) |
 
 `.cursor/rules/github-releases.mdc` summarizes agent expectations.
