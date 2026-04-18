@@ -7,7 +7,7 @@ name: Release
 on:
   push:
     branches:
-      - main
+      # semantic-release from main is paused until product development begins (avoid 0.x bumps from infra/docs-only work). Re-add `main` here when you want stable semver on every qualifying merge to main.
       - "rc/*"
   workflow_dispatch:
 
