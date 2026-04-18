@@ -7,21 +7,27 @@ alwaysApply: true
 
 ## Stack
 
-- **Public / versioned documentation** for Aura lives in **Docusaurus** (not ad-hoc wiki pages). If the Docusaurus app is not in the repo yet, **add it** at the standard layout: `website/` (or repo-root classic) with `docusaurus.config`, `sidebars`, and a `docs/` tree for MD/MDX.
-- Keep `package.json` scripts: `docs:dev`, `docs:build`, and treat **`docs:build` green** as part of “done” for doc-affecting changes when CI exists.
+- **Public / versioned documentation** for Aura lives in **Docusaurus** at **`apps/docs/`** (monorepo workspace **`@aura/docs`**): `docusaurus.config`, `sidebars`, and `apps/docs/docs/` for MD/MDX.
+- Root scripts: **`docs:dev`**, **`docs:build`**, **`docs:serve`**. Treat **`docs:build` green** as part of “done” for doc-affecting changes when CI exists.
+
+## What belongs in published docs (strict)
+
+- **`apps/docs/docs/`** is for **end-user, operator, and contributor-facing** material that is safe to publish: install, usage, high-level **roadmap** blurbs, troubleshooting, reference.
+- **Never** put **full internal plans** in Docusaurus: no detailed POC plans, sprint sequences, exhaustive scope checklists, or execution specs. Those belong **outside** the docs site (e.g. **`planning/`**, **`.cursor/plans`**, private notes)—not under **`apps/docs/docs/`**.
+- **Roadmaps** in published docs must stay **high level** (themes, phases, “near term / next”—no day-by-day or task-level plans).
 
 ## When to write docs
 
 - **Every user-visible or operator-visible feature** (CLI flags, extension settings, daemon flags, compose profiles, MCP, modes): add or update a **docs page** in the same PR or immediately after—no “doc later” unless the issue explicitly tracks it.
 - **Breaking protocol, config, or RPC**: update **versioned** docs and note migration (use Docusaurus **versioning** when publishing multiple releases).
-- **Internal engineering plans** (e.g. POC plans) may stay under `docs/dev/` (or similar) as MD; link them from the sidebar **“Contributing”** or **“Development”** so publishers and contributors find them. Avoid orphaned markdown at repo root long-term.
+- When you need to capture a **full plan**, add or edit repo-local planning docs (e.g. **`planning/`**); **do not** duplicate the full plan into **`apps/docs`**.
 
 ## Structure expectations
 
 - **User guide**: install, first session, modes, settings, troubleshooting.
 - **Self-host**: Docker/compose, env vars, networking, security defaults.
 - **Reference**: protocol schema version, config keys, CLI reference.
-- **Contributing**: monorepo layout, how to run extension/daemon, link to POC/roadmap docs.
+- **Contributing**: monorepo layout, how to run extension/daemon; link to **CONTRIBUTING** / repo paths for internal plans (not the full plan in Docusaurus).
 
 ## Publishing mindset
 
@@ -30,5 +36,5 @@ alwaysApply: true
 
 ## Agent workflow
 
-- After implementing or changing behavior, **search the Docusaurus `docs/` tree** for stale references (old flags, removed modes) and fix in the same session when practical.
+- After implementing or changing behavior, **search `apps/docs/docs/`** for stale references (old flags, removed modes) and fix in the same session when practical.
 - If a change has no doc impact, **state that briefly** in the PR description once (“N/A—internal refactor”).

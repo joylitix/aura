@@ -1,5 +1,7 @@
 # Aura — Proof of Concept (POC) plan
 
+> **Internal plan** — not published on the documentation site. High-level direction for users is in **`apps/docs`** (see **Development → Roadmap**).
+
 This document is the **detailed POC execution plan**. It aligns with the umbrella roadmap in `.cursor/plans` (standalone agent platform): **POC proves the spine**—VS Code extension ↔ local daemon ↔ `agent-core` ↔ LLM with **Ask-only**, **read-only tools**, **stdio transport**, **streaming transcript**.
 
 **POC is not MVP.** If a feature is not listed in [POC scope](#1-scope), defer it unless you explicitly extend POC (scope creep warning).
@@ -13,7 +15,7 @@ This document is the **detailed POC execution plan**. It aligns with the umbrell
 | **Repository** | `aura` (this workspace) |
 | **Publisher / product** | Joylitix · Aura (see branding in umbrella plan) |
 | **Target duration** | ~3–10 working days (single engineer), depending on familiarity with VS Code extension API |
-| **Stack** | TypeScript, Node 20+, pnpm workspaces, esbuild, Vitest (minimal use in POC) |
+| **Stack** | TypeScript, Node 20+, **npm workspaces**, esbuild, Vitest (minimal use in POC) |
 
 ---
 
@@ -21,7 +23,7 @@ This document is the **detailed POC execution plan**. It aligns with the umbrell
 
 ### 1.1 In scope (must ship for POC success)
 
-1. **Monorepo** with pnpm workspaces and shared `tsconfig.base.json`.
+1. **Monorepo** with **npm workspaces** and shared `tsconfig.base.json`.
 2. **`packages/protocol`**: minimal **versioned** message types for:
    - `session/start` (includes `schemaVersion`, `workspaceRoot`, `workspaceId`, `threadId`, `mode: "ask"`, optional `modelId` / provider hints)
    - `chat/userMessage` + assistant/tool events (streaming-friendly: chunk or discrete events—pick one and document)
@@ -64,7 +66,7 @@ This document is the **detailed POC execution plan**. It aligns with the umbrell
 - [ ] With a repo open in VS Code, user runs **Start session**, types a question, Aura **reads files** via tools and answers with **visible tool + model steps** in Output Channel.
 - [ ] **No file writes** and **no shell** executed by the agent in POC runs.
 - [ ] **Cancel** stops the run without orphan zombie processes in normal cases.
-- [ ] README section **“POC setup”**: clone, `pnpm i`, `pnpm build`, F5 launch, env vars, Ollama optional path.
+- [ ] README section **“POC setup”**: clone, `npm install`, `npm run build`, F5 launch, env vars, Ollama optional path.
 - [ ] One **Vitest** or node test: path sandbox rejects path outside `workspaceRoot`.
 
 ---
@@ -115,7 +117,7 @@ flowchart LR
 
 ### Sprint A — Repo + protocol (day 1)
 
-1. Initialize pnpm workspace root: `package.json`, `pnpm-workspace.yaml`, `tsconfig.base.json`, `.gitignore` (node_modules, out, dist).
+1. Initialize npm workspace root: `package.json` with `workspaces`, `tsconfig.base.json`, `.gitignore` (node_modules, out, dist).
 2. Create `packages/protocol` with exported types + constants (` SCHEMA_VERSION` ).
 3. No publication to npm required; workspace protocol only.
 
@@ -142,7 +144,7 @@ flowchart LR
 
 1. Cancel on extension deactivate / disposable.
 2. Failure modes: daemon crash → show error in Output Channel.
-3. README POC setup.
+3. README POC setup; **user-facing** docs under **`apps/docs`** remain **high-level** only (no full internal plans in the published site).
 
 ---
 
@@ -150,28 +152,17 @@ flowchart LR
 
 ```text
 aura/
-  package.json
-  pnpm-workspace.yaml
-  tsconfig.base.json
-  docs/
-    POC_PLAN.md          # this file
+  package.json            # workspaces: apps/*, future packages/*
+  planning/
+    POC_PLAN.md           # detailed POC plan (internal; not published docs)
+  apps/
+    docs/                 # Docusaurus — public/user-facing pages only
   packages/
     protocol/
       src/index.ts
       package.json
     agent-core/
-      src/
-        askLoop.ts
-        tools/
-        llm/openai.ts
-        llm/ollama.ts
-      package.json
-    agent-daemon/
-      src/main.ts
-      package.json
-    vscode-extension/
-      package.json
-      src/extension.ts
+      ...
 ```
 
 **POC may omit** `cli/` and `desktop/` folders or keep empty placeholders—do not wire them.
@@ -214,7 +205,7 @@ When POC exit criteria pass:
 ## 9. Checklist (copy for PR / issue)
 
 ```markdown
-- [ ] pnpm build green
+- [ ] npm run build green
 - [ ] F5: Start session → question → tool read → answer in Output Channel
 - [ ] Attempt path escape → rejected
 - [ ] Stop session / reload window → no zombie daemon
